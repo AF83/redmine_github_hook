@@ -10,9 +10,8 @@ module GithubHook
     end
 
     def call
-      repositories = find_repositories
-
-      repositories.each do |repository|
+      repository = Repository.find_by_identifier get_project_name
+      if repository
         tg1 = Time.now
         # Fetch the changes from Github
         update_repository(repository)
