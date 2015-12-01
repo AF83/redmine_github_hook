@@ -12,6 +12,7 @@ module GithubHook
     def call
       repository = Repository.find_by_identifier get_project_name
       if repository
+        Rails.logger.info "Update repository #{repository.identifier}"
         tg1 = Time.now
         # Fetch the changes from Github
         update_repository(repository)
@@ -23,6 +24,8 @@ module GithubHook
         tr2 = Time.now
 
         logger.info { "  GithubHook: Redmine repository updated: #{repository.identifier} (Git: #{time_diff_milli(tg1, tg2)}ms, Redmine: #{time_diff_milli(tr1, tr2)}ms)" }
+      else
+	Rails.logger.info "No repository found for #{get_project_name}"
       end
     end
 
