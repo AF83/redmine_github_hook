@@ -23,8 +23,7 @@ class GithubHookController < ApplicationController
   private
 
   def parse_payload
-    return params[:payload] if Hash === params[:payload]
-    JSON.parse(params[:payload] || "{}")
+    params
   end
 
   def render_error_as_json(error, status)
