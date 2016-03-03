@@ -10,7 +10,7 @@ module GithubHook
     end
 
     def call
-      repository = Repository.find_by_identifier get_project_name
+      repository = Repository.find_by_identifier get_identifier
       if repository
         Rails.logger.info "Update repository #{repository.identifier}"
         tg1 = Time.now
@@ -114,7 +114,7 @@ module GithubHook
         ActiveRecord::RecordNotFound,
         "Project identifier not specified"
       ) if identifier.nil?
-      identifier
+      identifier.downcase
     end
 
     # Attempts to find the project name. It first looks in the params, then in
